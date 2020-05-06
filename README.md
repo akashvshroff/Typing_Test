@@ -2,7 +2,7 @@
   * A simple typing test GUI built using Python, tkinter and SQL. The test uses the time function and the Levenshtein distance to calculate wpm and accuracy. More details below.
 
 # Purpose
-  * The project was extremely engaging in production and helped me further understand the nuances of GUIs with Tkinter and SQL. It taught me how to convert an intangible vision into a tangible, achievable outline which can then be realised using as simple code as possible. Through this undertaking, I learnt the importance of documentation and the need for clear and concise code. Moreover, it was extremely fun trying to beat my friends in terms of typing speed and accuracy.
+  * The project was extremely engaging in production and helped me further understand the nuances of GUIs with Tkinter and SQL. It taught me how to convert an intangible vision for a project into a tangible, achievable outline which is then realised using as simple code as possible. Through this undertaking, I learnt the importance of documentation and the need for clear and concise code, driven by OOP. Moreover, it was extremely fun trying to beat my friends in terms of typing speed and accuracy.
 
 # Description
   * Tkinter is used to create a GUI on which the program rests, using its notebook feature in order to create a UI that allows for tabs such as Getting Started, Typing Test and Leaderboard.
