@@ -9,7 +9,7 @@ class TypeTest:
 
     def __init__(self,master):
         self.master = master
-        self.conn = sqlite3.connect(r'C:\Users\akush\Desktop\Programming\Projects\Typing_Test\p1.sqlite')
+        self.conn = sqlite3.connect(r'C:\Users\akush\Desktop\Programming\Projects\Typing_Test\type_t.sqlite')
         self.cur = self.conn.cursor()
         self.cur.executescript('''Create table if not exists Scores (name TEXT, wpm REAL,
         accuracy REAL, sum REAL)''')
@@ -64,7 +64,7 @@ class TypeTest:
 
         self.test = Text(self.tab2, height = 8, width = 48, bg = '#f8f8ff', fg = '#26558B', font = ('System',12,'bold'))
         self.test.pack()
-        self.test.insert(INSERT, "The timer will start when you start typing!")
+        self.test.insert(INSERT, "The timer will start when you start typing.\nHit enter or stop to submit.\nDon't worry about newlines when typing!")
 
         self.opf = Frame(self.tab2, width = 40, bd = 0)
         self.opf.pack()
@@ -82,6 +82,8 @@ class TypeTest:
 
         self.opf2 = Frame(self.tab2, width = 40, bd = 0)
         self.opf2.pack()
+
+        self.master.bind('<Return>',self.stop_test)
 
         self.menu = Button(self.opf2, text = 'Main Menu', command = lambda: self.change_tab(0), bg = '#9fbfdf', fg = '#A42D41',  font = ('System',16,'bold'), width = 20, height = 2)
         self.menu.pack(side = 'left')
@@ -132,9 +134,11 @@ class TypeTest:
         else:
             self.start = time.time()
 
-    def stop_test(self):
+    def stop_test(self, event = None):
         #stop button
         self.star['state'] = NORMAL
+        self.stop['state'] = DISABLED
+        self.reset['state'] = DISABLED
         self.end = time.time()
         self.inp = self.test.get('1.0',"end-1c")
         try:
@@ -152,6 +156,8 @@ class TypeTest:
                 self.res = 'You have not typed anything!'
             self.ltx.set(self.res)
         except NameError: #stopped without typing anything
+            self.ltx.set("You have not typed anything!")
+        except AttributeError:
             self.ltx.set("You have not typed anything!")
         self.conn.commit()
 
@@ -179,7 +185,7 @@ class TypeTest:
         self.cur.execute('SELECT name, wpm, accuracy from Scores ORDER BY sum DESC')
         self.rows = self.cur.fetchall()
         sc = ''
-        for c, row in enumerate(rows):
+        for c, row in enumerate(self.rows):
             if c == 5:
                 break
             sc += '{}. {}: Speed = {}, Accuracy = {}.'.format(c+1,*row)
@@ -201,7 +207,7 @@ class TypeTest:
         self.fs = type_strings[:]
         self.ltx.set("Welcome to the test!\nClick start to show your first prompt and\nclick submit to reveal your score!")
         self.test.delete('1.0', END)
-        self.test.insert(INSERT, "The timer will start when you start typing!")
+        self.test.insert(INSERT, "The timer will start when you start typing.\nHit enter or stop to submit.\nDon't worry about newlines when typing!")
         self.subname["state"] = DISABLED
 
     def new_user(self):
